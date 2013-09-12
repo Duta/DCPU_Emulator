@@ -301,11 +301,14 @@ void DCPU::executeSpecialInstruction(const DCPU_WORD opcode, DCPU_WORD *ap)
 		break;
 	case 0x11:
 		// HWQ a
-		// TODO: Set A, B, C, X, Y registers to information about
-		//       hardware a.
 		//       A+(B<<16) is a 32 bit word identifying the hardware id
 		//       C is the hardware version
 		//       X+(Y<<16) is a 32 bit word identifying the manufacturer
+		A = hardware[*ap]->id & 0xffff;
+		B = (hardware[*ap]->id >> 16) & 0xffff;
+		C = hardware[*ap]->version;
+		X = hardware[*ap]->manufacturer & 0xffff;
+		Y = (hardware[*ap]->manufacturer >> 16) & 0xffff;
 		break;
 	case 0x12:
 		// HWI a
@@ -317,7 +320,7 @@ void DCPU::executeSpecialInstruction(const DCPU_WORD opcode, DCPU_WORD *ap)
 	}
 }
 
-DCPU_WORD * DCPU::getValue(const DCPU_WORD val, bool a)
+DCPU_WORD * DCPU::getValue(const DCPU_WORD val, const bool a)
 {
 	switch(val)
 	{
@@ -396,6 +399,10 @@ DCPU_WORD * DCPU::getValue(const DCPU_WORD val, bool a)
 		// 0x1F: next word (literal)
 	case 0x1F:
 		return &NEXT_WORD;
+		// To make the compiler happy that
+		// all paths return a value:
+	default:
+		return nullptr;
 	}
 }
 

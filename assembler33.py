@@ -146,4 +146,3 @@ print(len(instructions), 'instructions parsed. Beginning emulation.')
 
 args = (str(x) for x in instructions)
 os.execl(sys.argv[1], *args)
-

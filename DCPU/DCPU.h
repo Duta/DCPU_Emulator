@@ -30,7 +30,7 @@ public:
 private:
 	void executeInstruction(const DCPU_WORD);
 	void executeSpecialInstruction(const DCPU_WORD, DCPU_WORD *);
-	DCPU_WORD * getValue(const DCPU_WORD, bool);
+	DCPU_WORD * getValue(const DCPU_WORD, const bool);
 	void resetRAM();
 	void clearHardwareConnections();
 
