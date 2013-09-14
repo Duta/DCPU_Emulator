@@ -87,18 +87,6 @@ For now there are no comments, however everything
 after an instruction or label is ignored, so you
 can use that for a makeshift commenting system.
 
-**Important:** As of the time of writing only labels
-on the first 31 instructions are supported - you can
-do others, but prepare for unexpected behaviour. This
-is because currently the assembler just does a straight
-conversion from labels to literal values during a
-preprocessing pass over the input, and literal values
-can -- *should* -- only be in the range -1 to 30
-inclusive. Any other values will not work correctly.
-This will change in the future so that labels anywhere
-will function as expected - I just need to work out
-the best way to achieve this first.
-
 ### Opcode List
 
     +---------+--------------------------------------------------------+

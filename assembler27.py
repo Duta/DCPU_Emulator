@@ -141,41 +141,29 @@ for i, line in enumerate(lines):
     if parts[0][-1] == ':':
         if len(parts) == 1:
             label_value = i - len(labels)
-            if label_value > 30:
-                # TODO: Work around the fact that
-                #       literals can only be (-1..30)
-                #       Perhaps do something like:
-                #         // Push I onto the stack in
-                #         // case the programmer was
-                #         // using it, because we're
-                #         // going to be overwriting it
-                #         SET PUSH I
-                #         // Set I to be the value to
-                #         // set PC to
-                #         SET I 0
-                #         while(label_value > 30) { ADD I 30; label_value -= 30 }
-                #         ADD I label_value
-                #         // Actually set the PC
-                #         SET PC Z
-                #         // Pop I's original value
-                #         // back off the stack
-                #         SET I POP
-                #       The problem with that is the last
-                #       instruction - SET I POP - won't be
-                #       executed. Need to work that one out
-                print 'WARNING: Label value > 30 added. Only labels on instructions 0<=line<=30 are currently supported.'
-                pass
             labels[parts[0][:-1]] = label_value
 
 # Now on the second pass convert any
 # references to the labels to the actual
 # numbers
+new_lines = lines[:]
+num_lines_added = 0
 for i, line in enumerate(lines):
     parts = line.split(' ')
+    old_num_lines_added = num_lines_added
+    parts.reverse()
     for j, part in enumerate(parts):
         if part in labels:
-            parts[j] = str(labels[part])
-    lines[i] = ' '.join(parts)
+            label_val = labels[part]
+            if label_val > 30:
+                parts[j] = 'NW'
+                num_lines_added += 1
+                new_lines.insert(i + num_lines_added, str(label_val))
+            else:
+                parts[j] = str(label_val)
+    parts.reverse()
+    new_lines[i + old_num_lines_added] = ' '.join(parts)
+lines = new_lines
 
 # Now do a final pass actually converting
 for line in lines:
