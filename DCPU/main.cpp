@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	// Load args into RAM
 	std::cout << "Loading " << argc - 1 << " instructions into RAM...";
 	std::stringstream ss;
-	for(int i = 1; i < argc; ++i)
+	for(int i = 1; i < argc && i <= RAM_SIZE; ++i)
 	{
 		ss << argv[i];
 		ss >> computer.RAM[i - 1];
