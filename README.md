@@ -195,11 +195,11 @@ the best way to achieve this first.
 
 ### Values
 
-Note that values enclosed in square brackets, e.g.:
+Note that values enclosed in square brackets, such as:
 
     [a]
 
-mean the value at index `a` in RAM.
+means the value at index `a` in RAM.
 
     +--------+--------------------------------------------------------+
     | Value  | Meaning                                                |
@@ -553,8 +553,8 @@ Note that regular instructions take two values
 
 While the above table fully describes the values the 5 bits of b may take
 on, a is 6 bits and so may also take on the values 0x20 to 0x3F inclusive.
-This extra range of a is used for literal values in the range 0xFFFF-0x1E
- - i.e. -1 to 30 inclusive.
+This extra range of a is used for literal values in the range 0xFFFF-0x1E -
+i.e. -1 to 30 inclusive.
 
 With regards to `0x18`, where it may be PUSH or POP depending on whether
 it is the first or second argument to a regular instruction, with special
