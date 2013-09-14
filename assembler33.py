@@ -106,7 +106,7 @@ else:
         lines.append(line)
 
 # Format the input
-lines = [line.strip().replace(r'\s', ' ').upper() for line in lines]
+lines = [' '.join(line.split()).upper() for line in lines]
 
 # Remove blank lines
 lines = [line for line in lines if line]
@@ -128,7 +128,57 @@ def get_value(item):
         return labels[item]
     return int(item) + 0x21
 
+def is_number(item):
+    try:
+        int(item)
+        return True
+    except:
+        return False
+
+# On the first pass, collect all the labels
 for i, line in enumerate(lines):
+    parts = line.split(' ')
+    if parts[0][-1] == ':':
+        if len(parts) == 1:
+            label_value = i - len(labels)
+            if label_value > 30:
+                # TODO: Work around the fact that
+                #       literals can only be (-1..30)
+                #       Perhaps do something like:
+                #         // Push I onto the stack in
+                #         // case the programmer was
+                #         // using it, because we're
+                #         // going to be overwriting it
+                #         SET PUSH I
+                #         // Set I to be the value to
+                #         // set PC to
+                #         SET I 0
+                #         while(label_value > 30) { ADD I 30; label_value -= 30 }
+                #         ADD I label_value
+                #         // Actually set the PC
+                #         SET PC Z
+                #         // Pop I's original value
+                #         // back off the stack
+                #         SET I POP
+                #       The problem with that is the last
+                #       instruction - SET I POP - won't be
+                #       executed. Need to work that one out
+                print('WARNING: Label value > 30 added. Only labels on instructions 0<=line<=30 are currently supported.')
+                pass
+            labels[parts[0][:-1]] = label_value
+
+# Now on the second pass convert any
+# references to the labels to the actual
+# numbers
+for i, line in enumerate(lines):
+    parts = line.split(' ')
+    for j, part in enumerate(parts):
+        if part in labels:
+            parts[j] = str(labels[part])
+    lines[i] = ' '.join(parts)
+
+# Now do a final pass actually converting
+for line in lines:
     parts = line.split(' ')
     if parts[0] in opcodes:
         opcode = opcodes[parts[0]]
@@ -139,10 +189,10 @@ for i, line in enumerate(lines):
         opcode = special_opcodes[parts[0]]
         a = get_value(parts[1])
         instructions.append((a << 10) + (opcode << 5))
-    elif parts[0][-1] == ':':
-        labels[parts[0][:-1]] = i
+    elif is_number(parts[0]):
+        instructions.append(int(parts[0]) & 0xFFFF)
 
 print(len(instructions), 'instructions parsed. Beginning emulation.')
 
-args = (str(x) for x in instructions)
+args = [sys.argv[1]] + [str(x) for x in instructions]
 os.execl(sys.argv[1], *args)

@@ -11,7 +11,8 @@ int main(int argc, char **argv)
 	for(int i = 1; i < argc; ++i)
 	{
 		ss << argv[i];
-		ss >> computer.RAM[i];
+		ss >> computer.RAM[i - 1];
+		ss.clear();
 	}
 	std::cout << "Done." << std::endl;
 	// Print initial state

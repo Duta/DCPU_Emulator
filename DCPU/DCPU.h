@@ -19,10 +19,9 @@ public:
 	DCPU();
 
 	void run(unsigned int);
-	void step();
 	void reset();
-	void connectHardware(Hardware *);
-	void disconnectHardware(Hardware *);
+	void connectHardware(Hardware *);     // TODO: Consider returning the index at which
+	void disconnectHardware(Hardware *);  //       hardware is connected/disconnected
 	unsigned int getNumConnectedHardware() const;
 	void printState() const;
 
