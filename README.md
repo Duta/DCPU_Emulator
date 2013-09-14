@@ -552,8 +552,8 @@ Note that regular instructions take two values
 #### Notes
 
 While the above table fully describes the values the 5 bits of b may take
-on, a is 6 bits and so may also take on the values 0x20 to 0x3F inclusive.
-This extra range of a is used for literal values in the range 0xFFFF-0x1E -
+on, a is 6 bits and so may also take on the values `0x20` to `0x3F` inclusive.
+This extra range of a is used for literal values in the range `0xFFFF-0x1E` -
 i.e. -1 to 30 inclusive.
 
 With regards to `0x18`, where it may be PUSH or POP depending on whether
