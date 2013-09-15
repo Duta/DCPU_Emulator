@@ -153,6 +153,7 @@ for i, line in enumerate(lines):
 lines = new_lines
 
 # Now do a final pass actually converting
+incorrect_push_pop_usage = False
 for line in lines:
     parts = line.split(' ')
     if parts[0] in opcodes:
@@ -160,12 +161,20 @@ for line in lines:
         a = get_value(parts[2])
         b = get_value(parts[1])
         instructions.append((a << 10) + (b << 5) + opcode)
+        if parts[1] == 'POP' or parts[2] == 'PUSH':
+            incorrect_push_pop_usage = True
     elif parts[0] in special_opcodes:
         opcode = special_opcodes[parts[0]]
         a = get_value(parts[1])
         instructions.append((a << 10) + (opcode << 5))
+        if parts[1] == 'PUSH':
+            incorrect_push_pop_usage = True
     elif is_number(parts[0]):
         instructions.append(int(parts[0]) & 0xFFFF)
+
+if incorrect_push_pop_usage:
+    print 'WARNING: Incorrect usage of PUSH/POP at least once.'
+    print '         Refer to the README section Assembler >> Values >> Notes'
 
 print len(instructions), 'instructions parsed. Beginning emulation.'
 

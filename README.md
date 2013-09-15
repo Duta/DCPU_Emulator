@@ -273,8 +273,31 @@ check the stack pointer, which holds the index of the head
 (leftmost value) of the stack, or 0 when the stack is empty.
 For example code to achieve this, see the examples section.
 
-**More to write** (PUSH/POP's different semantics
-depending on which argument it is)
+The difference between PUSH and POP is not which of them
+you write, but rather where they are placed. For example:
+
+    // Both of these push 5 onto the stack:
+    SET PUSH 5
+    SET POP  5
+
+    // Both of these pop a value and store it in A:
+    SET A POP
+    SET A PUSH
+
+    // Both of these pop a value and store it in IA:
+    IAS POP
+    IAS PUSH
+
+The rule is:
+
+ - For regular instructions, if it is the first value
+   then it always means PUSH, and if it is the second
+   then it always means POP.
+ - For special instructions (which all only take one
+   value) it always means POP.
+
+The assembler will issue a warning if you use them
+incorrectly, however it will still assemble the code.
 
 In regular instructions of the form:
 
