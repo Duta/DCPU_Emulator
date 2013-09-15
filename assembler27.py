@@ -1,16 +1,3 @@
-"""
-USAGE:
-    python assembler.py emulator [assembly]
-
-        emulator: The name of the emulator's
-                  executable file.
-        assembly: The name of the assembly file
-                  to convert code from. If this
-                  argument is not given, the
-                  code can be inputted directly
-                  via a simple prompt.
-"""
-
 import sys, os
 
 # Opcodes
@@ -56,7 +43,7 @@ special_opcodes = {
 }
 
 # Special values
-specials = {
+special_values = {
     'A': 0x00,
     'B': 0x01,
     'C': 0x02,
@@ -122,8 +109,8 @@ instructions = []
 labels = {}
 
 def get_value(item):
-    if item in specials:
-        return specials[item]
+    if item in special_values:
+        return special_values[item]
     if item in labels:
         return labels[item]
     return int(item) + 0x21

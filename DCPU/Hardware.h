@@ -8,6 +8,7 @@ class Hardware
 public:
 	Hardware(uint32_t, uint16_t, uint32_t);
 
+	virtual void interrupt() {}
 	std::string toString() const;
 
 	uint32_t id;

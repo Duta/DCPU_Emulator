@@ -113,7 +113,7 @@ can use that for a makeshift commenting system.
     +---------+--------------------------------------------------------+
     | MOD b a | Sets b to b mod a if a is non-zero, 0 otherwise        |
     +---------+--------------------------------------------------------+
-    | MDI b a | <TODO>                                                 |
+    | MDI b a | The same as MOD, but treats b as signed. -16 % 7 = -16 |
     +---------+--------------------------------------------------------+
     | AND b a | Bitwise-and's a and b and stores the result in b       |
     +---------+--------------------------------------------------------+
@@ -404,7 +404,7 @@ Note that regular instructions take two values
     +---------+------+--------------+
     | MOD b a | 0x08 |     DONE     |
     +---------+------+--------------+
-    | MDI b a | 0x09 |   ? DONE ?   |
+    | MDI b a | 0x09 |     DONE     |
     +---------+------+--------------+
     | AND b a | 0x0A |     DONE     |
     +---------+------+--------------+
@@ -414,7 +414,7 @@ Note that regular instructions take two values
     +---------+------+--------------+
     | SHR b a | 0x0D |     DONE     |
     +---------+------+--------------+
-    | ASR b a | 0x0E |   ? DONE ?   |
+    | ASR b a | 0x0E |     DONE     |
     +---------+------+--------------+
     | SHL b a | 0x0F |     DONE     |
     +---------+------+--------------+
@@ -460,7 +460,7 @@ Note that regular instructions take two values
     +---------+------+--------------+
     | HWQ a   | 0x11 |     DONE     |
     +---------+------+--------------+
-    | HWI a   | 0x12 |      NO      |
+    | HWI a   | 0x12 |     DONE     |
     +---------+------+--------------+
 
 **More to write**

@@ -10,7 +10,6 @@ DCPU::DCPU()
 void DCPU::run(unsigned int numSteps)
 {
 	while(PC < numSteps)
-	//for(unsigned int i = 0; i < numSteps; ++i)
 	{
 		executeInstruction(NEXT_WORD);
 	}
@@ -196,7 +195,6 @@ void DCPU::executeInstruction(const DCPU_WORD instruction)
 				*bp = 0;
 			}
 		}
-		// TODO: Check this is actually right
 		break;
 	case 0x0A:
 		// AND b, a
@@ -217,8 +215,7 @@ void DCPU::executeInstruction(const DCPU_WORD instruction)
 		break;
 	case 0x0E:
 		// ASR b, a
-		// TODO: Ensure this is working.
-		*bp = ((DCPU_WORD_S)*bp) >> *ap;
+		*bp = (DCPU_WORD_S)*bp >> *ap;
 		EX = (*bp << 16) >> *ap;
 		break;
 	case 0x0F:
@@ -343,7 +340,7 @@ void DCPU::executeSpecialInstruction(const DCPU_WORD opcode, DCPU_WORD *ap)
 		break;
 	case 0x12:
 		// HWI a
-		// TODO: Sends an interrupt to hardware a.
+		hardware[*ap]->interrupt();
 		break;
 	default:
 		// Opcode not recognized. Just NOP

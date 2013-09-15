@@ -20,8 +20,8 @@ public:
 
 	void run(unsigned int);
 	void reset();
-	void connectHardware(Hardware *);     // TODO: Consider returning the index at which
-	void disconnectHardware(Hardware *);  //       hardware is connected/disconnected
+	void connectHardware(Hardware *);     // TODO: Maybe return the index at which
+	void disconnectHardware(Hardware *);  //       hardware is dis/connected?
 	unsigned int getNumConnectedHardware() const;
 	void printState() const;
 
