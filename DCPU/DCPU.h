@@ -13,27 +13,23 @@
 #define RAM_SIZE 0x10000
 #define MAX_CONNECTED_HARDWARE 0x10000
 
+class Hardware;
+
 class DCPU
 {
 public:
 	DCPU();
+	~DCPU();
 
 	void run(unsigned int);
 	void reset();
-	void connectHardware(Hardware *);     // TODO: Maybe return the index at which
-	void disconnectHardware(Hardware *);  //       hardware is dis/connected?
+	void connectHardware(Hardware *);
+	void disconnectHardware(Hardware *);
 	unsigned int getNumConnectedHardware() const;
 	void printState() const;
 
+	// RAM
 	DCPU_WORD RAM[RAM_SIZE];
-private:
-	void executeInstruction(const DCPU_WORD);
-	void executeSpecialInstruction(const DCPU_WORD, DCPU_WORD *);
-	DCPU_WORD * getValue(const DCPU_WORD, const bool);
-	void resetRAM();
-	void clearHardwareConnections();
-
-	bool shouldExecute;
 	// Registers
 	DCPU_WORD A, B, C, X, Y, Z, I, J;
 	// Program counter
@@ -44,6 +40,14 @@ private:
 	DCPU_WORD EX;
 	// Interrupt address
 	DCPU_WORD IA;
+private:
+	void executeInstruction(const DCPU_WORD);
+	void executeSpecialInstruction(const DCPU_WORD, DCPU_WORD *);
+	DCPU_WORD * getValue(const DCPU_WORD, const bool);
+	void resetRAM();
+	void clearHardwareConnections();
+
+	bool shouldExecute;
 	// Connected hardware
 	Hardware * hardware[MAX_CONNECTED_HARDWARE];
 };

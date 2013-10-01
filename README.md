@@ -168,8 +168,8 @@ can use that for a makeshift commenting system.
     |         | pops PC from the stack                                 |
     +---------+--------------------------------------------------------+
     | IAQ a   | Interrupts will be added to the queue instead of       |
-    |         | triggered, otherwise interrupts will be triggered as   |
-    |         | normal again                                           |
+    |         | triggered if a is non-zero, otherwise interrupts will  |
+    |         | be triggered as normal again                           |
     +---------+--------------------------------------------------------+
     | HWN a   | Sets a to the number of connected hardware devices     |
     +---------+--------------------------------------------------------+
@@ -342,7 +342,6 @@ A basic loop structure:
     // It can, however, simply be written as:
 
         SET A 0
-        SET PC loop_condition
     loop_condition:
         IFL A 20
           SET PC loop_body
@@ -381,7 +380,7 @@ The bits for a regular instruction are as follows:
     aaaaaabbbbbooooo
 
 i.e. the first 6 bits are a, the next 5 b and the
-final five o, where:
+final 5 o, where:
 
  - a and b are values that are the arguments to
    the instructions.

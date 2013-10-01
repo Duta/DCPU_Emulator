@@ -126,7 +126,6 @@ def is_number(item):
 for i, line in enumerate(lines):
     parts = line.split(' ')
     if parts[0][-1] == ':':
-        if len(parts) == 1:
             label_value = i - len(labels)
             labels[parts[0][:-1]] = label_value
 

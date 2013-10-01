@@ -1,3 +1,4 @@
+#include <sstream>
 #include "Hardware.h"
 
 Hardware::Hardware(uint32_t id, uint16_t version, uint32_t manufacturer)
@@ -5,10 +6,11 @@ Hardware::Hardware(uint32_t id, uint16_t version, uint32_t manufacturer)
 
 std::string Hardware::toString() const
 {
-	std::string s("Hardware{");
-	s +=  "id=" + id;
-	s += " version=" + version;
-	s += " manufacturer=" + manufacturer;
-	s += "}";
-	return s;
+	std::stringstream ss;
+	ss << std::hex;
+	ss << "{id=0x" << id;
+	ss << ",version=0x" << version;
+	ss << ",manufacturer=0x" << manufacturer;
+	ss << "}";
+	return ss.str();
 }

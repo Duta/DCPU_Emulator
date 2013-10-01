@@ -7,6 +7,11 @@ DCPU::DCPU()
 	reset();
 }
 
+DCPU::~DCPU()
+{
+	
+}
+
 void DCPU::run(unsigned int numSteps)
 {
 	while(PC < numSteps)
@@ -83,14 +88,15 @@ void DCPU::printState() const
 	{
 		if(RAM[i])
 		{
-			std::cout << "RAM[" << i << "] =\t" << RAM[i] << std::endl;
+			std::cout << std::dec << "RAM[" << i << "] =\t";
+			std::cout << RAM[i] << " / 0x" << std::hex << RAM[i] << std::endl;
 		}
 	}
 	for(unsigned int i = 0; i < MAX_CONNECTED_HARDWARE; ++i)
 	{
 		if(hardware[i])
 		{
-			std::cout << "hardware[" << i << "] =\t" << hardware[i] << std::endl;
+			std::cout << "hardware[" << i << "] =\t" << hardware[i]->toString() << std::endl;
 		}
 	}
 }
@@ -332,15 +338,15 @@ void DCPU::executeSpecialInstruction(const DCPU_WORD opcode, DCPU_WORD *ap)
 		//       A+(B<<16) is a 32 bit word identifying the hardware id
 		//       C is the hardware version
 		//       X+(Y<<16) is a 32 bit word identifying the manufacturer
-		A = hardware[*ap]->id & 0xffff;
-		B = (hardware[*ap]->id >> 16) & 0xffff;
+		A = hardware[*ap]->id & 0xFFFF;
+		B = (hardware[*ap]->id >> 16) & 0xFFFF;
 		C = hardware[*ap]->version;
-		X = hardware[*ap]->manufacturer & 0xffff;
-		Y = (hardware[*ap]->manufacturer >> 16) & 0xffff;
+		X = hardware[*ap]->manufacturer & 0xFFFF;
+		Y = (hardware[*ap]->manufacturer >> 16) & 0xFFFF;
 		break;
 	case 0x12:
 		// HWI a
-		hardware[*ap]->interrupt();
+		hardware[*ap]->interrupt(this);
 		break;
 	default:
 		// Opcode not recognized. Just NOP
