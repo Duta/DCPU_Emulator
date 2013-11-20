@@ -9,12 +9,13 @@
 
 ### Assembler
 
-    python assembler[27|33].py emulator [assembly]
+    python dcpuasm.py out_file [in_file]
 
-    emulator:   The name of the emulator's
-                executable (probably `DCPU`)
+    out_file:   The file name to use for the
+                machine code file which is
+                going to be created.
 
-    assembly:   The name of the assembly file
+    in_file:    The name of the assembly file
                 to convert code from. If this
                 argument is not given, the
                 code can be inputted directly
@@ -22,42 +23,46 @@
 
 #### Notes
 
-The `assembler27.py` and `assembler33.py` files differ
-only in the version of Python that they run under -
-2.7 and 3.3 respectively. Which you use depends purely
-on what you have installed on your system.
+This requires python 3.3 installed.
+If you have 2.7, it won't work.
 
 #### Example
 
-    python assembler33.py DCPU test.s
+    python dcpuasm.py test.dcpu test.s
 
 ### Emulator
 
-    DCPU instructions
+    DCPU code_file [-printStart] [-printEnd] [-printSteps]
 
-    instructions:   The list of (zero or more)
-                    machine code instructions
-                    to execute.
+    code_file:      The machine code file,
+                    the contents of which
+                    is what will be emulated.
+
+    -printStart:    Include this argument if
+                    the emulator should print
+                    its initial state prior
+                    to emulation.
+
+    -printEnd:      Include this argument if
+                    the emulator should print
+                    its final state after
+                    emulation.
+
+    -printSteps:    Include this argument if
+                    the emulator should print
+                    its the value of the program
+                    counter at each iteration
+                    of the emulation.
 
 #### Notes
 
-You should rarely need to call this yourself -
-instead, the assembler will call it for you.
+The standard extension for machine code files is .dcpu.
+
+The optional arguments can be in any order.
 
 #### Example
 
-    DCPU 37889 37922 37922 38947 44801 49921 54369 24929
-
-Which in assembly is:
-
-    SET A 4
-    ADD B 4
-    ADD B 4
-    SUB B 5
-    SET PUSH 10
-    SET PUSH 15
-    SET X 20
-    SET [X] POP
+    DCPU test.dcpu -printStart -printEnd
 
 ## Assembler
 
