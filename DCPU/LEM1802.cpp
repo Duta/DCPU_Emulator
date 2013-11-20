@@ -128,7 +128,7 @@ const DCPU_WORD LEM1802::DEFAULT_FONT[256] =
     0xFF81, 0x81FF, // Y
     0xFF81, 0x81FF, // Z
     0xFF81, 0x81FF, // [
-    0xFF81, 0x81FF, // \
+    0xFF81, 0x81FF, // \ (this is to stop the \ escaping the next line)
     0xFF81, 0x81FF, // ]
     0xFF81, 0x81FF, // ^
     0xFF81, 0x81FF, // _
