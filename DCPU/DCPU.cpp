@@ -16,6 +16,7 @@ void DCPU::run(unsigned int numSteps)
 {
 	while(PC < numSteps)
 	{
+		std::cout << "Step. (PC = " << PC << ")" << std::endl;
 		executeInstruction(NEXT_WORD);
 	}
 }
