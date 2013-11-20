@@ -18,36 +18,36 @@ class Hardware;
 class DCPU
 {
 public:
-	DCPU();
-	~DCPU();
+    DCPU();
+    ~DCPU();
 
-	void run(unsigned int);
-	void reset();
-	void connectHardware(Hardware *);
-	void disconnectHardware(Hardware *);
-	unsigned int getNumConnectedHardware() const;
-	void printState() const;
+    void run(unsigned int);
+    void reset();
+    void connectHardware(Hardware *);
+    void disconnectHardware(Hardware *);
+    unsigned int getNumConnectedHardware() const;
+    void printState() const;
 
-	// RAM
-	DCPU_WORD RAM[RAM_SIZE];
-	// Registers
-	DCPU_WORD A, B, C, X, Y, Z, I, J;
-	// Program counter
-	DCPU_WORD PC;
-	// Stack pointer
-	DCPU_WORD SP;
-	// Extra/excess
-	DCPU_WORD EX;
-	// Interrupt address
-	DCPU_WORD IA;
+    // RAM
+    DCPU_WORD RAM[RAM_SIZE];
+    // Registers
+    DCPU_WORD A, B, C, X, Y, Z, I, J;
+    // Program counter
+    DCPU_WORD PC;
+    // Stack pointer
+    DCPU_WORD SP;
+    // Extra/excess
+    DCPU_WORD EX;
+    // Interrupt address
+    DCPU_WORD IA;
 private:
-	void executeInstruction(const DCPU_WORD);
-	void executeSpecialInstruction(const DCPU_WORD, DCPU_WORD *);
-	DCPU_WORD * getValue(const DCPU_WORD, const bool);
-	void resetRAM();
-	void clearHardwareConnections();
+    void executeInstruction(const DCPU_WORD);
+    void executeSpecialInstruction(const DCPU_WORD, DCPU_WORD *);
+    DCPU_WORD * getValue(const DCPU_WORD, const bool);
+    void resetRAM();
+    void clearHardwareConnections();
 
-	bool shouldExecute;
-	// Connected hardware
-	Hardware * hardware[MAX_CONNECTED_HARDWARE];
+    bool shouldExecute;
+    // Connected hardware
+    Hardware * hardware[MAX_CONNECTED_HARDWARE];
 };
