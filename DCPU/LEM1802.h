@@ -13,16 +13,16 @@ private:
 	bool isConnected() const;
 
 	// The DCPU the LEM1802 is connected to
-	DCPU *dcpu;
+	const DCPU *dcpu;
 	// Start of video RAM
-	DCPU_WORD *videoRAMStart;
+	const DCPU_WORD *videoRAMStart;
 	// Start of font RAM
-	DCPU_WORD *fontRAMStart;
+	const DCPU_WORD *fontRAMStart;
 	// Start of palette RAM
-	DCPU_WORD *paletteRAMStart;
+	const DCPU_WORD *paletteRAMStart;
 	// Border colour
-	DCPU_WORD *borderColor;
+	const DCPU_WORD *borderColor;
 
-	static DCPU_WORD DEFAULT_FONT[256];   // These should be const but then can't
-	static DCPU_WORD DEFAULT_PALETTE[16]; // assign them to non-const pointers.
+	static const DCPU_WORD DEFAULT_FONT[256];   // These should be const but then can't
+	static const DCPU_WORD DEFAULT_PALETTE[16]; // assign them to non-const pointers.
 };
