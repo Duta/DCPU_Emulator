@@ -21,7 +21,7 @@ public:
     DCPU();
     ~DCPU();
 
-    void run(unsigned int);
+    void run(const unsigned int, const bool);
     void reset();
     void connectHardware(Hardware *);
     void disconnectHardware(Hardware *);

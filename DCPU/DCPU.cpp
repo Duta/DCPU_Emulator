@@ -12,11 +12,14 @@ DCPU::~DCPU()
 
 }
 
-void DCPU::run(unsigned int numSteps)
+void DCPU::run(unsigned int numSteps, const bool debug)
 {
     while(PC < numSteps)
     {
-        std::cout << "Step. (PC = " << PC << ")" << std::endl;
+        if(debug)
+        {
+            std::cout << "Step. (PC = " << PC << ")" << std::endl;
+        }
         executeInstruction(NEXT_WORD);
     }
 }

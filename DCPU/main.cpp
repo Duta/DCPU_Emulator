@@ -5,15 +5,37 @@
 #include "HMD2043.h"
 #include "HMU1440.h"
 
+bool hasParam(std::string param, int argc, char *argv[])
+{
+    for(int i = 2; i < argc; ++i)
+    {
+        if(param == argv[i])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void printUsage()
+{
+    std::cout << "USAGE:" << std::endl;
+    std::cout << "    DCPU code_file [-printStart] [-printEnd] [-printSteps]" << std::endl;
+}
+
+void printError(std::string error)
+{
+    std::cout << "ERROR: " << error << std::endl;
+}
+
 int main(int argc, char *argv[])
 {
     using std::ios;
     // Check that the correct number of arguments were given
     if(argc < 2)
     {
-        std::cout << "ERROR: Insufficient arguments provided." << std::endl;
-        std::cout << "USAGE:" << std::endl;
-        std::cout << "    DCPU code_file [-printStart] [-printEnd]" << std::endl;
+        printError("Insufficient arguments provided.");
+        printUsage();
         return 1;
     }
     // "Create" the computer (if only it were that easy)
@@ -39,7 +61,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        std::cout << "ERROR: Unable to read code file." << std::endl;
+        printError("Unable to read code file.");
         return 1;
     }
     // Connect hardware
@@ -53,20 +75,16 @@ int main(int argc, char *argv[])
     CONNECT_HARDWARE(hmd);
 #undef CONNECT_HARDWARE
     // Print initial state
-    std::string printStart("-printStart");
-    if((argc >= 3 && printStart == argv[2])
-    || (argc >= 4 && printStart == argv[3])) {
+    if(hasParam("-printStart", argc, argv)) {
         std::cout << "Initial DCPU state:" << std::endl;
         computer.printState();
     }
     // Execute
     std::cout << "Running " << std::dec << numInstructions << " instructions...";
-    computer.run(numInstructions);
+    computer.run(numInstructions, hasParam("-printSteps", argc, argv));
     std::cout << "Done." << std::endl;
     // Print final state
-    std::string printEnd("-printEnd");
-    if((argc >= 3 && printEnd == argv[2])
-    || (argc >= 4 && printEnd == argv[3])) {
+    if(hasParam("-printEnd", argc, argv)) {
         std::cout << "Final DCPU state:" << std::endl;
         computer.printState();
     }
