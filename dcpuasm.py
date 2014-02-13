@@ -133,15 +133,14 @@ for i, line in enumerate(lines):
 for line in lines:
     parts = line.split(' ')
     for i, part in enumerate(parts):
-        if i > 0 and i < 3:
-            if part in labels and labels[part] > 30:
-                # We're going to have to insert a line
-                # here on the third pass, so inc all
-                # label values greater than this line
-                for key in labels:
-                    if labels[key] > labels[part]:
-                        pass
-                        #labels[key] += 1
+        if 0 < i < 3 and part in labels and labels[part] > 30:
+            # We're going to have to insert a line
+            # here on the third pass, so inc all
+            # label values greater than this line
+            for key in labels:
+                if labels[key] > labels[part]:
+                    pass
+                    #labels[key] += 1
 
 # Now on the third pass convert any
 # references to the labels to the actual
